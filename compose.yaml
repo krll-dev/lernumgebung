@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "janina"
       MYSQL_DATABASE: appdb
-      MYSQL_USER: app
+      MYSQL_USER: janina
       MYSQL_PASSWORD: "janina"
     ports:
       - "3306:3306"
@@ -24,7 +24,7 @@ services:
     environment:
       CB_SERVER_NAME: "Local DB Admin"
       CB_SERVER_URL: "http://localhost:8978/"
-      CB_ADMIN_NAME: cbadmin
+      CB_ADMIN_NAME: janina
       CB_ADMIN_PASSWORD: "janina"
     ports:
       - "8978:8978"
