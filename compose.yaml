@@ -2,24 +2,6 @@
 #   docker compose up -d
 
 services:
-  postgres:
-    image: postgres:17.9
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-appdb}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-AppPw_123!}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-
   mysql:
     image: mysql:8.4.8
     restart: unless-stopped
@@ -42,22 +24,6 @@ services:
       timeout: 5s
       retries: 10
       start_period: 20s
-
-  pgadmin:
-    image: dpage/pgadmin4:9.14.0
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@example.local}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-AdminPw_123!}
-      PGADMIN_DISABLE_POSTFIX: "1"
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
-    ports:
-      - "5050:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      postgres:
-        condition: service_healthy
 
   phpmyadmin:
     image: phpmyadmin:5.2.3-apache
@@ -86,7 +52,5 @@ services:
       - cloudbeaver_data:/opt/cloudbeaver/workspace
 
 volumes:
-  postgres_data:
   mysql_data:
-  pgadmin_data:
   cloudbeaver_data:
