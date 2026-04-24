@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Dieses Skript oeffnet eine Shell im Docker-Compose-Service "mysql".
+# Es fuehrt keinen MySQL-Login aus.
+
+SERVICE_NAME="mysql"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="$SCRIPT_DIR/$(basename "${BASH_SOURCE[0]}")"
+
+open_terminal_if_needed() {
+  if [ -t 0 ]; then
+    return
+  fi
+
+  local quoted_script
+  printf -v quoted_script "%q" "$SCRIPT_PATH"
+
+  if command -v xfce4-terminal >/dev/null 2>&1; then
+    xfce4-terminal --working-directory="$SCRIPT_DIR" --command="$quoted_script" &
+    exit 0
+  fi
+
+  if command -v gnome-terminal >/dev/null 2>&1; then
+    gnome-terminal --working-directory="$SCRIPT_DIR" -- bash -lc "$quoted_script"
+    exit 0
+  fi
+
+  if command -v x-terminal-emulator >/dev/null 2>&1; then
+    x-terminal-emulator -e "$SCRIPT_PATH" &
+    exit 0
+  fi
+}
+
+pause_before_exit() {
+  echo
+  read -r -p "Enter druecken zum Schliessen..."
+}
+
+open_terminal_if_needed
+
+cd "$SCRIPT_DIR" || exit 1
+
+echo "Oeffne Shell im Docker-Container fuer Service '$SERVICE_NAME'..."
+echo
+
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Fehler: Docker wurde nicht gefunden."
+  echo "Bitte pruefe, ob Docker auf dem Laptop installiert ist."
+  pause_before_exit
+  exit 1
+fi
+
+if ! docker compose ps "$SERVICE_NAME" >/dev/null 2>&1; then
+  echo "Fehler: Der Docker-Compose-Service '$SERVICE_NAME' ist nicht erreichbar."
+  echo "Starte die Services zuerst mit:"
+  echo "docker compose up -d"
+  pause_before_exit
+  exit 1
+fi
+
+echo "Du bist gleich im Container."
+echo "Es wird kein MySQL-Login ausgefuehrt."
+echo
+
+docker compose exec "$SERVICE_NAME" sh -lc 'if command -v bash >/dev/null 2>&1; then exec bash; else exec sh; fi'
+
+pause_before_exit
