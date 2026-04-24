@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # Doppelklick in Finder oder `open ...` oeffnet ein neues Terminal-Fenster.
-# Dieses Skript ist fuer den MySQL-Datenbank-Container, nicht fuer phpMyAdmin.
+# Dieses Skript ist fuer den MySQL-Datenbank-Container.
 
 set -u
 
