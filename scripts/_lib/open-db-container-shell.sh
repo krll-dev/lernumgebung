@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Shared helper for opening an interactive shell inside a DB container.
-# Wrapper scripts set SERVICE_NAME, AUTO_START and REQUIRE_PROFILE_HINT.
+# Wrapper scripts set SERVICE_NAME and AUTO_START.
 
 set -u
 
@@ -87,7 +87,6 @@ if [ -z "${SERVICE_NAME:-}" ]; then
 fi
 
 AUTO_START=${AUTO_START:-false}
-REQUIRE_PROFILE_HINT=${REQUIRE_PROFILE_HINT:-false}
 
 if ! cd "$REPO_ROOT"; then
   fail_and_stay_open "Repository-Ordner konnte nicht geoeffnet werden: $REPO_ROOT"
@@ -101,21 +100,6 @@ if ! docker compose version >/dev/null 2>&1; then
   fail_and_stay_open "Docker Compose ist nicht verfuegbar."
 fi
 
-HOST_ARCH=$(uname -m 2>/dev/null || printf 'unknown')
-IS_ARM64=false
-
-case "$HOST_ARCH" in
-  arm64|aarch64)
-    IS_ARM64=true
-    ;;
-esac
-
-if [ "$SERVICE_NAME" = "mssql" ] && [ "$IS_ARM64" = "true" ]; then
-  print_line "Hinweis: MSSQL-Container sind auf diesem Host ($HOST_ARCH) nicht offiziell unterstuetzt."
-  print_line "Microsoft dokumentiert MSSQL-Container fuer x86-64 Linux-Hosts."
-  print_blank
-fi
-
 container_id=$(get_container_id)
 
 if ! is_container_running "$container_id"; then
@@ -127,13 +111,8 @@ if ! is_container_running "$container_id"; then
     container_id=$(get_container_id)
   else
     print_line "Der Service '$SERVICE_NAME' laeuft aktuell nicht."
-    if [ "$REQUIRE_PROFILE_HINT" = "true" ]; then
-      print_line "Starte ihn zuerst mit:"
-      print_line "  docker compose --profile mssql up -d mssql"
-    else
-      print_line "Starte ihn zuerst mit:"
-      print_line "  docker compose up -d $SERVICE_NAME"
-    fi
+    print_line "Starte ihn zuerst mit:"
+    print_line "  docker compose up -d $SERVICE_NAME"
     open_local_shell
   fi
 fi

@@ -1,7 +1,5 @@
 # Start default stack:
 #   docker compose up -d
-# Start MSSQL too (x86-64 host recommended):
-#   docker compose --profile mssql up -d
 
 services:
   postgres:
@@ -39,30 +37,6 @@ services:
         [
           "CMD-SHELL",
           "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD} --silent",
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
-
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-CU24-ubuntu-22.04
-    profiles:
-      - mssql
-    restart: unless-stopped
-    environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: Developer
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Str0ng!Passw0rd}
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql_data:/var/opt/mssql
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q \"SELECT 1\" -No",
         ]
       interval: 10s
       timeout: 5s
@@ -114,6 +88,5 @@ services:
 volumes:
   postgres_data:
   mysql_data:
-  mssql_data:
   pgadmin_data:
   cloudbeaver_data:

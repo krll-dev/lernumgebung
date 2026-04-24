@@ -12,6 +12,8 @@ Dieses Repository dient aktuell als Arbeits- und Lernumgebung fuer ein Vorhaben 
 
 Vor Empfehlungen, Plaenen, Aufgabenlisten oder Strukturvorschlaegen in diesem Repository immer zuerst [`einstieg-in-programmierung.md`](/Users/kirill.esau/dev/lernumgebung/einstieg-in-programmierung.md) beruecksichtigen. Die Datei ist die aktuelle Deep-Research-Grundlage fuer das Vorhaben und gilt hier als inhaltliche Leitlinie, solange der Nutzer nichts anderes festlegt.
 
+Die Dateien [`einstieg-in-programmierung.md`](/Users/kirill.esau/dev/lernumgebung/einstieg-in-programmierung.md) und [`Einstieg in die Informatik aus HR mit Ziel IT-Projektleitung.pdf`](/Users/kirill.esau/dev/lernumgebung/Einstieg%20in%20die%20Informatik%20aus%20HR%20mit%20Ziel%20IT-Projektleitung.pdf) duerfen von Agents NIE angepasst, neu erzeugt oder automatisch aktualisiert werden.
+
 ## Inhaltliche Leitplanken aus der Research-Datei
 
 Die zentrale empfohlene Reihenfolge ist:
