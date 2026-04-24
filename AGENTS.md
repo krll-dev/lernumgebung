@@ -53,9 +53,9 @@ Passende Mini-Projekte sind zum Beispiel:
 
 Die Research-Datei empfiehlt als pragmatische Startumgebung:
 
-- Lenovo-Laptop als Hauptgeraet
+- Lenovo-Laptop als Hauptgeraet; Linux Mint Xfce ist dort installiert
 - Raspberry Pi 3 B+ nur als Nebenprojekt, nicht als primaere Lernmaschine
-- leichtgewichtiges Linux, bevorzugt Linux Mint Xfce
+- leichtgewichtiges Linux ist damit als Startumgebung umgesetzt
 - SQLite plus DB Browser for SQLite
 - Python
 - Git
