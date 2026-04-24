@@ -3,16 +3,16 @@ services:
     image: mysql:8.4.8
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: "RootPw_123!"
+      MYSQL_ROOT_PASSWORD: "janina"
       MYSQL_DATABASE: appdb
       MYSQL_USER: app
-      MYSQL_PASSWORD: "AppPw_123!"
+      MYSQL_PASSWORD: "janina"
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -pRootPw_123! --silent"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -pjanina --silent"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -25,7 +25,7 @@ services:
       CB_SERVER_NAME: "Local DB Admin"
       CB_SERVER_URL: "http://localhost:8978/"
       CB_ADMIN_NAME: cbadmin
-      CB_ADMIN_PASSWORD: "CbAdmin_123!"
+      CB_ADMIN_PASSWORD: "janina"
     ports:
       - "8978:8978"
     volumes:
